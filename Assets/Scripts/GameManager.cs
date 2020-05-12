@@ -6,10 +6,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject water_tile, sand_tile, mountain_tile, forest_tile, grass_tile, stone_tile;
+
+    public float height_factor = 20f;
     // Start is called before the first frame update
     
     float x_step = 17.321f;
-    float y_step = 5;
+    float y_step = 5f;
     float line_offset = 8.661f;
     void Start()
     {
@@ -23,7 +25,7 @@ public class GameManager : MonoBehaviour
             for (y = 0; y < heightmap.height; y++)
             {
                 Color pixelColor = heightmap.GetPixel(x, y);
-                Vector3 pos = new Vector3(y % 2 * line_offset + x * x_step, 0, y * y_step);
+                Vector3 pos = new Vector3(y % 2 * line_offset + x * x_step, pixelColor.b * height_factor, y * y_step);
 
                 if (pixelColor.b < 0.01)
                 {
