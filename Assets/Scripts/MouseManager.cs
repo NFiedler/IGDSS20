@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using UnityEditorInternal;
 using UnityEngine;
@@ -14,8 +15,16 @@ public class MouseManager : MonoBehaviour
     public int Scrollfactor = 3;
     public int maxHeight = 50;
     public int minHeight = 20;
+    public Boolean foundMaxCoordinates = false;
+    float largestXInScene = 0;
+    float largestZInScene = 0;
+    float smallestXInScene = 1000000000;
+    float smallestZInScene = 1000000000;
+    public float largestXOffset = 0;
+    public float largestZOffset = 0;
+    public float smallestXOffset = 0;
+    public float smallestZOffset = 0;
 
-    public 
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +38,14 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!foundMaxCoordinates)
+        {
+            findMaxDimensions();
+            foundMaxCoordinates = true;
+            Debug.Log("max x: " + largestXInScene + " max z: " + largestZInScene);
+            Debug.Log("min x: " + smallestXInScene + " min z: " + smallestZInScene);
+        }
+
         if (Input.mouseScrollDelta.y != 0)
         {
             UnityEngine.Vector3 yChange = new UnityEngine.Vector3(0, Input.mouseScrollDelta.y, 0);
@@ -62,6 +79,30 @@ public class MouseManager : MonoBehaviour
 
                 // move the camera by just as many pixels as the mouse moved since the last update
                 Camera.main.transform.position += invertedDiff;
+
+                // check min x/max x
+                if(Camera.main.transform.position.x < smallestXInScene - smallestXOffset)
+                {
+                    UnityEngine.Vector3 camPos = new UnityEngine.Vector3(smallestXInScene - smallestXOffset, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                    Camera.main.transform.position = camPos;
+                }
+                else if (Camera.main.transform.position.x > largestXInScene - largestXOffset)
+                {
+                    UnityEngine.Vector3 camPos = new UnityEngine.Vector3(largestXInScene - largestXOffset, Camera.main.transform.position.y, Camera.main.transform.position.z);
+                    Camera.main.transform.position = camPos;
+                }
+
+                // check min y/max y
+                if (Camera.main.transform.position.z < smallestZInScene - smallestZOffset)
+                {
+                    UnityEngine.Vector3 camPos = new UnityEngine.Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, smallestZInScene - smallestZOffset);
+                    Camera.main.transform.position = camPos;
+                }
+                else if (Camera.main.transform.position.z > largestZInScene - largestZOffset)
+                {
+                    UnityEngine.Vector3 camPos = new UnityEngine.Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, largestZInScene - largestZOffset);
+                    Camera.main.transform.position = camPos;
+                }
             }
             previousClickWasRight = true;
 
@@ -76,7 +117,36 @@ public class MouseManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Left mouse button was pressed")
+            Debug.Log("Left mouse button was pressed");
+            Debug.Log(Input.mousePosition.x + " " + Input.mousePosition.y);
+            //UnityEngine.Vector3Int mouseTilePosition = new UnityEngine.Vector3Int((int) currentMousePosition.x, (int) currentMousePosition.y, (int) currentMousePosition.z);
+            //Debug.Log(Tilemap.GetTile(mouseTilePosition));
+        }
+
+    }
+
+    private void findMaxDimensions()
+    {
+
+        foreach(GameObject go in Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[])
+        {
+            if (go.transform.position.x > largestXInScene)
+            {
+                largestXInScene = go.transform.position.x;
+            }
+            if (go.transform.position.z > largestZInScene)
+            {
+                largestZInScene = go.transform.position.z;
+            }
+
+            if (go.transform.position.x < smallestXInScene)
+            {
+                smallestXInScene = go.transform.position.x;
+            }
+            if (go.transform.position.z < smallestZInScene)
+            {
+                smallestZInScene = go.transform.position.z;
+            }
         }
 
     }
