@@ -38,14 +38,14 @@ public class MouseManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // this happens in the first update method and not in start to prevent the case where a game object is not instantiated
         if (!foundMaxCoordinates)
         {
             findMaxDimensions();
             foundMaxCoordinates = true;
-            Debug.Log("max x: " + largestXInScene + " max z: " + largestZInScene);
-            Debug.Log("min x: " + smallestXInScene + " min z: " + smallestZInScene);
         }
 
+        // check if the mouse wheel turned
         if (Input.mouseScrollDelta.y != 0)
         {
             UnityEngine.Vector3 yChange = new UnityEngine.Vector3(0, Input.mouseScrollDelta.y, 0);
@@ -114,14 +114,19 @@ public class MouseManager : MonoBehaviour
         // after we used the position, we save the last position. This allows us to compare it to the next one to see the delta.
         prevMousePosition = currentMousePosition;
 
-
+        // print name of left clicked tile
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Left mouse button was pressed");
-            Debug.Log(Input.mousePosition.x + " " + Input.mousePosition.y);
-            //UnityEngine.Vector3Int mouseTilePosition = new UnityEngine.Vector3Int((int) currentMousePosition.x, (int) currentMousePosition.y, (int) currentMousePosition.z);
-            //Debug.Log(Tilemap.GetTile(mouseTilePosition));
+            // generate ray from mouse position
+            Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            // check if object was hit
+            if (Physics.Raycast(mouseRay, out hit, maxHeight + 200, 1000))
+            {
+                Debug.Log(hit.collider.gameObject.name);
+            }
         }
+        
 
     }
 
