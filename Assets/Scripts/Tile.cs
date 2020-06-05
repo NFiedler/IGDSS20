@@ -11,6 +11,19 @@ public class Tile : MonoBehaviour
         _coordinateWidth = coordinateWidth;
     }
 
+    public int GetNeigborTileCount(TileTypes type)
+    {
+        int count = 0;
+        foreach(Tile t in _neighborTiles)
+        {
+            if(t._type == type)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
     #region Attributes
     public TileTypes _type; //The type of the tile
     // public Building _building; //The building on this tile
