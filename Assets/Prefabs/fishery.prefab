@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2746774114489580349}
   - component: {fileID: 2746774114490713761}
   - component: {fileID: 2809411147045414795}
+  - component: {fileID: -5904707697469454490}
   m_Layer: 0
   m_Name: fishery
   m_TagString: Untagged
@@ -101,6 +102,41 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 3a4247c0c2d69534297bc86d369cecd5, type: 3}
+--- !u!114 &-5904707697469454490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2746774114488504025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e340f3719da3794428b0238d0d0094f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upkeep: 40
+  _build_cost_money: 100
+  _build_cost_planks: 2
+  _resource_generation_interval: 30
+  _output_count: 1
+  input_is_wood: 0
+  input_is_wool: 0
+  input_is_potato: 0
+  water_can_be_built_on: 0
+  sand_can_be_built_on: 1
+  grass_can_be_built_on: 0
+  forest_can_be_built_on: 0
+  stone_can_be_built_on: 0
+  mountain_can_be_built_on: 0
+  fish_is_output: 1
+  wood_is_output: 0
+  planks_is_output: 0
+  wool_is_output: 0
+  cloth_is_output: 0
+  potato_is_output: 0
+  schnapps_is_output: 0
+  _min_neighbors: 1
+  _max_neighbors: 3
 --- !u!1001 &996782256353092812
 PrefabInstance:
   m_ObjectHideFlags: 0

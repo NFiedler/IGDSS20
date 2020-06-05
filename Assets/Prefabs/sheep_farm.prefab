@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3398142}
   - component: {fileID: 2311680}
   - component: {fileID: 65960688814135602}
+  - component: {fileID: 4438413628200686915}
   m_Layer: 0
   m_Name: sheep_farm
   m_TagString: Untagged
@@ -94,6 +95,41 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4.5730743, y: 2.264221, z: 4.5060096}
   m_Center: {x: 0, y: 1.1321105, z: 0}
+--- !u!114 &4438413628200686915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 194894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e340f3719da3794428b0238d0d0094f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upkeep: 20
+  _build_cost_money: 100
+  _build_cost_planks: 2
+  _resource_generation_interval: 30
+  _output_count: 1
+  input_is_wood: 0
+  input_is_wool: 0
+  input_is_potato: 0
+  water_can_be_built_on: 0
+  sand_can_be_built_on: 0
+  grass_can_be_built_on: 1
+  forest_can_be_built_on: 0
+  stone_can_be_built_on: 0
+  mountain_can_be_built_on: 0
+  fish_is_output: 0
+  wood_is_output: 0
+  planks_is_output: 0
+  wool_is_output: 1
+  cloth_is_output: 0
+  potato_is_output: 0
+  schnapps_is_output: 0
+  _min_neighbors: 1
+  _max_neighbors: 4
 --- !u!1001 &5778380479109230667
 PrefabInstance:
   m_ObjectHideFlags: 0

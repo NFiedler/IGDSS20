@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using UnityEngine;
@@ -14,7 +15,22 @@ public class Building : MonoBehaviour
     public int _build_cost_planks; // placement planks cost
     public int _resource_generation_interval; // If operating at 100% efficiency, this is the time in seconds it takes for one production cycle to finish
     public int _output_count; // The number of output resources per generation cycle (for example the Sawmill produces 2 planks at a time)
-    public List<Tile> _can_be_built_on; // A restriction on which types of tiles it can be placed on
+    public Boolean input_is_wood;
+    public Boolean input_is_wool;
+    public Boolean input_is_potato;
+    public Boolean water_can_be_built_on;
+    public Boolean sand_can_be_built_on;
+    public Boolean grass_can_be_built_on;
+    public Boolean forest_can_be_built_on;
+    public Boolean stone_can_be_built_on;
+    public Boolean mountain_can_be_built_on;
+    public Boolean fish_is_output;
+    public Boolean wood_is_output;
+    public Boolean planks_is_output;
+    public Boolean wool_is_output;
+    public Boolean cloth_is_output;
+    public Boolean potato_is_output;
+    public Boolean schnapps_is_output;
     public Tile _efficiency_scale_with_neighbor_tile; // A choice if its efficiency scales with a specific type of surrounding tile
     public int _min_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
     public int _max_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)

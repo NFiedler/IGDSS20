@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 87842295800854733}
   - component: {fileID: 87842295799479999}
   - component: {fileID: 134139666238971715}
+  - component: {fileID: 3920845527748575804}
   m_Layer: 0
-  m_Name: SM_Prop_Log_01
+  m_Name: sawmill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,6 +101,41 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43290954182287726, guid: b80becbbcd32f3a4e813a4ec55aeebd4, type: 2}
+--- !u!114 &3920845527748575804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 87842295797770037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e340f3719da3794428b0238d0d0094f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upkeep: 10
+  _build_cost_money: 100
+  _build_cost_planks: 0
+  _resource_generation_interval: 15
+  _output_count: 2
+  input_is_wood: 1
+  input_is_wool: 0
+  input_is_potato: 0
+  water_can_be_built_on: 0
+  sand_can_be_built_on: 0
+  grass_can_be_built_on: 1
+  forest_can_be_built_on: 1
+  stone_can_be_built_on: 1
+  mountain_can_be_built_on: 0
+  fish_is_output: 0
+  wood_is_output: 0
+  planks_is_output: 1
+  wool_is_output: 0
+  cloth_is_output: 0
+  potato_is_output: 0
+  schnapps_is_output: 0
+  _min_neighbors: 0
+  _max_neighbors: 0
 --- !u!1 &1059352200232026148
 GameObject:
   m_ObjectHideFlags: 0
