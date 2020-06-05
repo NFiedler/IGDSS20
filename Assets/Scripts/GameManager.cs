@@ -52,9 +52,10 @@ public class GameManager : MonoBehaviour
     float x_step = 17.321f;
     float y_step = 5f;
     float line_offset = 8.661f;
+    Texture2D heightmap;
     void Start()
     {
-        Texture2D heightmap = Resources.Load("Heightmap_64", typeof(Texture2D)) as Texture2D; //Resources.Load("Assets/Textures/Heightmap_16") as Texture2D;
+        heightmap = Resources.Load("Heightmap_16", typeof(Texture2D)) as Texture2D; //Resources.Load("Assets/Textures/Heightmap_16") as Texture2D;
         //Texture2D heightmap = (Texture2D)Resources.LoadAssetAtPath("Assets/Textures/Heightmap_16", typeof(Texture2D));
         int x, y;
 
@@ -111,8 +112,6 @@ public class GameManager : MonoBehaviour
                 _tileMap[x, y]._neighborTiles = FindNeighborsOfTile(_tileMap[x, y]);
             }
         }
-
-
     }
 
     #region MonoBehaviour
@@ -203,9 +202,9 @@ public class GameManager : MonoBehaviour
 
     //Is called by MouseManager when a tile was clicked
     //Forwards the tile to the method for spawning buildings
-    public void TileClicked(int height, int width)
+    public void TileClicked(int width, int height)
     {
-        Tile t = _tileMap[height, width];
+        Tile t = _tileMap[width, height];
 
         PlaceBuildingOnTile(t);
     }
@@ -216,10 +215,11 @@ public class GameManager : MonoBehaviour
         //if there is building prefab for the number input
         if (_selectedBuildingPrefabIndex < _buildingPrefabs.Length)
         {
-            //TODO: check if building can be placed and then istantiate it
-            if selected
-
-            buildBuilding(t, type)
+            int x = t._coordinateWidth;
+            int y = t._coordinateHeight;
+            Color pixelColor = heightmap.GetPixel(x, y);
+            Vector3 pos = new Vector3(y % 2 * line_offset + x * x_step, pixelColor.b * height_factor, y * y_step);
+            Instantiate(_buildingPrefabs[_selectedBuildingPrefabIndex], pos, Quaternion.identity);
         }
     }
 

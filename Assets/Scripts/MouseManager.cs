@@ -25,6 +25,10 @@ public class MouseManager : MonoBehaviour
     public float smallestXOffset = 0;
     public float smallestZOffset = 0;
 
+    float x_step = 17.321f;
+    float y_step = 5f;
+    float line_offset = 8.661f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -123,7 +127,10 @@ public class MouseManager : MonoBehaviour
             // check if object was hit
             if (Physics.Raycast(mouseRay, out hit, maxHeight + 200, 1000))
             {
-                Debug.Log(hit.collider.gameObject.name);
+                UnityEngine.Vector3 pos = hit.collider.gameObject.GetComponent<Transform>().position;
+                int y = (int)Math.Round(pos.y / y_step);
+                int x = (int)Math.Round((pos.x - ((y % 2) * line_offset)) / x_step);
+                GameObject.Find("GameManager").GetComponent<GameManager>().TileClicked(x, y);
             }
         }
         
