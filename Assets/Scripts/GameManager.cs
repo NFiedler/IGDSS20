@@ -103,7 +103,13 @@ public class GameManager : MonoBehaviour
             }
         }
 
-
+        for (x = 0; x < heightmap.width; x++)
+        {
+            for (y = 0; y < heightmap.height; y++)
+            {
+                _tileMap[x, y]._neighborTiles = FindNeighborsOfTile(_tileMap[x, y]);
+            }
+        }
     }
 
     #region MonoBehaviour
@@ -216,15 +222,60 @@ public class GameManager : MonoBehaviour
     private List<Tile> FindNeighborsOfTile(Tile t)
     {
         List<Tile> result = new List<Tile>();
+        int x = t._coordinateWidth;
+        int y = t._coordinateHeight;
 
-        //TODO: put all neighbors in the result list
-        //oxx
-        //xyx
-        //oxx
+        int xSize = _tileMap.GetLength(0);
+        int ySize = _tileMap.GetLength(1);
 
-        //xxo
-        //xyx
-        //xxo
+        if (x - 1 >= 0)
+        {
+            result.Add(_tileMap[x - 1, y]);
+        }
+        if(x + 1 < xSize)
+        {
+            result.Add(_tileMap[x + 1, y]);
+        }
+
+        if(y - 1 >= 0)
+        {
+            result.Add(_tileMap[x, y - 1]);
+
+            if(y % 2 > 0)  // indented
+            {
+                if(x - 1 >= 0)
+                {
+                    result.Add(_tileMap[x - 1, y - 1]);
+                }
+            }
+            else  // unindented
+            {
+                if (x + 1 < xSize)
+                {
+                    result.Add(_tileMap[x + 1, y - 1]);
+                }
+            }
+        }
+
+        if (y + 1 < ySize)
+        {
+            result.Add(_tileMap[x, y + 1]);
+
+            if (y % 2 > 0)  // indented
+            {
+                if (x - 1 >= 0)
+                {
+                    result.Add(_tileMap[x - 1, y + 1]);
+                }
+            }
+            else  // unindented
+            {
+                if (x + 1 < xSize)
+                {
+                    result.Add(_tileMap[x + 1, y + 1]);
+                }
+            }
+        }
 
         return result;
     }
