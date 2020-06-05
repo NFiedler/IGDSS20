@@ -57,10 +57,10 @@ public class GameManager : MonoBehaviour
         //Texture2D heightmap = (Texture2D)Resources.LoadAssetAtPath("Assets/Textures/Heightmap_16", typeof(Texture2D));
         int x, y;
 
-        
+
         PopulateResourceDictionary();
 
-        _tileMap = new Tile[heightmap.width,heightmap.height];
+        _tileMap = new Tile[heightmap.width, heightmap.height];
         // Loop through the images pixels to reset color.
         for (x = 0; x < heightmap.width; x++)
         {
@@ -72,26 +72,32 @@ public class GameManager : MonoBehaviour
                 if (pixelColor.b < 0.01)
                 {
 
-                    _tileMap[x, y] =  Instantiate(water_tile, pos, Quaternion.identity);
+                    _tileMap[x, y] = new Tile(Tile.TileTypes.Water, x, y);
+                    Instantiate(water_tile, pos, Quaternion.identity);
                 }
                 else if (pixelColor.b < 0.2)
                 {
+                    _tileMap[x, y] = new Tile(Tile.TileTypes.Sand, x, y);
                     Instantiate(sand_tile, pos, Quaternion.identity);
                 }
                 else if (pixelColor.b < 0.4)
                 {
+                    _tileMap[x, y] = new Tile(Tile.TileTypes.Grass, x, y);
                     Instantiate(grass_tile, pos, Quaternion.identity);
                 }
                 else if (pixelColor.b < 0.6)
                 {
+                    _tileMap[x, y] = new Tile(Tile.TileTypes.Forest, x, y);
                     Instantiate(forest_tile, pos, Quaternion.identity);
                 }
                 else if (pixelColor.b < 0.8)
                 {
+                    _tileMap[x, y] = new Tile(Tile.TileTypes.Stone, x, y);
                     Instantiate(stone_tile, pos, Quaternion.identity);
                 }
                 else
                 {
+                    _tileMap[x, y] = new Tile(Tile.TileTypes.Mountain, x, y);
                     Instantiate(mountain_tile, pos, Quaternion.identity);
                 }
             }
