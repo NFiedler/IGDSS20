@@ -1461,6 +1461,9 @@ MonoBehaviour:
   cloth_is_output: 0
   potato_is_output: 0
   schnapps_is_output: 0
+  water_must_be_neighbor: 0
+  forest_must_be_neighbor: 1
+  grass_must_be_neighbor: 0
   _min_neighbors: 1
   _max_neighbors: 6
 --- !u!1 &4391498950776851923
