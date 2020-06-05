@@ -29,6 +29,9 @@ public class Building : MonoBehaviour
     public Boolean cloth_is_output;
     public Boolean potato_is_output;
     public Boolean schnapps_is_output;
+    public Boolean water_must_be_neighbor;
+    public Boolean forest_must_be_neighbor;
+    public Boolean grass_must_be_neighbor;
     public Tile _efficiency_scale_with_neighbor_tile; // A choice if its efficiency scales with a specific type of surrounding tile
     public int _min_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
     public int _max_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
@@ -40,7 +43,22 @@ public class Building : MonoBehaviour
     Building(Tile tile) 
     {
         _tile = tile;
-        //_efficiency = _type.GetEfficiency(_tile);
+        if(_min_neighbors > 0)
+        {
+            if(water_must_be_neighbor)
+            {
+                _efficiency = tile.GetNeigborTileCount(Tile.TileTypes.Water) / _max_neighbors;
+            }
+            else if(forest_must_be_neighbor)
+            {
+                _efficiency = tile.GetNeigborTileCount(Tile.TileTypes.Forest) / _max_neighbors;
+            }
+            else if(grass_must_be_neighbor)
+            {
+                _efficiency = tile.GetNeigborTileCount(Tile.TileTypes.Grass) / _max_neighbors;
+            }
+        }
+
     }
 
 
