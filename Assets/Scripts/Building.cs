@@ -47,15 +47,45 @@ public class Building : MonoBehaviour
         {
             if(water_must_be_neighbor)
             {
-                _efficiency = tile.GetNeigborTileCount(Tile.TileTypes.Water) / _max_neighbors;
+                int neighbors = tile.GetNeigborTileCount(Tile.TileTypes.Water);
+                if(neighbors == 0)
+                {
+                    // prevent division by zero
+                    _efficiency = 0;
+                }
+                else
+                {
+                    // prevent efficiency > 1
+                    _efficiency = Math.Min(1, neighbors / _max_neighbors);
+                }
             }
             else if(forest_must_be_neighbor)
             {
-                _efficiency = tile.GetNeigborTileCount(Tile.TileTypes.Forest) / _max_neighbors;
+                int neighbors = tile.GetNeigborTileCount(Tile.TileTypes.Forest);
+                if (neighbors == 0)
+                {
+                    // prevent division by zero
+                    _efficiency = 0;
+                }
+                else
+                {
+                    // prevent efficiency > 1
+                    _efficiency = Math.Min(1, neighbors / _max_neighbors);
+                }
             }
             else if(grass_must_be_neighbor)
             {
-                _efficiency = tile.GetNeigborTileCount(Tile.TileTypes.Grass) / _max_neighbors;
+                int neighbors = tile.GetNeigborTileCount(Tile.TileTypes.Grass);
+                if (neighbors == 0)
+                {
+                    // prevent division by zero
+                    _efficiency = 0;
+                }
+                else
+                {
+                    // prevent efficiency > 1
+                    _efficiency = Math.Min(1, neighbors / _max_neighbors);
+                }
             }
         }
 
