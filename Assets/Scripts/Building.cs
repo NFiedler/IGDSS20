@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    private BuildingType _type; // name of building
-
     private Tile _tile; // tile the building is built on
     private float _efficiency; // Calculated based on the surrounding tile types
     public int _upkeep; // money cost per minute
@@ -39,10 +37,9 @@ public class Building : MonoBehaviour
     private string input_ressource; // A choice for input resource types (0, 1 or 2 types)
     private string output_ressource; // A choice for output resource type
 
-    Building(BuildingType type, Tile tile) 
+    Building(Tile tile) 
     {
         _tile = tile;
-        _type = type;
         //_efficiency = _type.GetEfficiency(_tile);
     }
 
