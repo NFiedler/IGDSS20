@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     #region Buildings
     public GameObject[] _buildingPrefabs; //References to the building prefabs
     public int _selectedBuildingPrefabIndex = 0; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
+
     #endregion
 
 
@@ -110,6 +111,8 @@ public class GameManager : MonoBehaviour
                 _tileMap[x, y]._neighborTiles = FindNeighborsOfTile(_tileMap[x, y]);
             }
         }
+
+
     }
 
     #region MonoBehaviour
@@ -214,7 +217,9 @@ public class GameManager : MonoBehaviour
         if (_selectedBuildingPrefabIndex < _buildingPrefabs.Length)
         {
             //TODO: check if building can be placed and then istantiate it
+            if selected
 
+            buildBuilding(t, type)
         }
     }
 
