@@ -256,6 +256,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd580981bf7ab5845976a690fd1035a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fishery: {fileID: 2746774114488504025, guid: 4cd787543f3378740a4950ddb5232696, type: 3}
+  lumberjack: {fileID: 0}
+  sheepfarm: {fileID: 0}
+  frameworkknitters: {fileID: 0}
+  potatofarm: {fileID: 0}
+  schnappsdistillery: {fileID: 0}
+  sawmill: {fileID: 0}
+  _buildingPrefabs: []
+  _selectedBuildingPrefabIndex: 0
+  _ResourcesInWarehouse_Fish: 0
+  _ResourcesInWarehouse_Wood: 0
+  _ResourcesInWarehouse_Planks: 0
+  _ResourcesInWarehouse_Wool: 0
+  _ResourcesInWarehouse_Clothes: 0
+  _ResourcesInWarehouse_Potato: 0
+  _ResourcesInWarehouse_Schnapps: 0
   water_tile: {fileID: 2064574628029001573, guid: 2a914b6a4ef15cb4ca77257050f15f29,
     type: 3}
   sand_tile: {fileID: 6461190606886679958, guid: ff7ef13f88a71c94eb42898019398dcd,
@@ -367,3 +383,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xAndZScrollFactor: 3
   Scrollfactor: 3
+  maxHeight: 50
+  minHeight: 20
+  foundMaxCoordinates: 0
+  largestXOffset: 0
+  largestZOffset: 0
+  smallestXOffset: 0
+  smallestZOffset: 0
