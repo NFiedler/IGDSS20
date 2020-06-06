@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194894}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 5778380479109367511}
@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e340f3719da3794428b0238d0d0094f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _tile: {fileID: 0}
   _upkeep: 20
   _build_cost_money: 100
   _build_cost_planks: 2
@@ -131,6 +132,7 @@ MonoBehaviour:
   water_must_be_neighbor: 0
   forest_must_be_neighbor: 0
   grass_must_be_neighbor: 1
+  _efficiency_scale_with_neighbor_tile: {fileID: 0}
   _min_neighbors: 1
   _max_neighbors: 4
 --- !u!1001 &5778380479109230667
