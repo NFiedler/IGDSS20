@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
 
     #region Resources
+    public int money;
     private Dictionary<ResourceTypes, float> _resourcesInWarehouse = new Dictionary<ResourceTypes, float>(); //Holds a number of stored resources for every ResourceType
 
     //A representation of _resourcesInWarehouse, broken into individual floats. Only for display in inspector, will be removed and replaced with UI later
@@ -219,15 +220,23 @@ public class GameManager : MonoBehaviour
     private void PlaceBuildingOnTile(Tile t)
     {
         //if there is building prefab for the number input
-        if (_selectedBuildingPrefabIndex < _buildingPrefabs.Count)
+        if (_selectedBuildingPrefabIndex < _buildingPrefabs.Count && t._building == null && _buildingPrefabs[_selectedBuildingPrefabIndex].CanBeBuiltOn(t._type) && CheckResourcesForBuilding())
         {
             int x = t._coordinateWidth;
             int y = t._coordinateHeight;
             Color pixelColor = heightmap.GetPixel(x, y);
             Vector3 pos = new Vector3(y % 2 * line_offset + x * x_step, pixelColor.b * height_factor, y * y_step);
-            Instantiate(_buildingPrefabs[_selectedBuildingPrefabIndex], pos, Quaternion.identity);
-            // TODO give to tile
+            GameObject go = Instantiate(_buildingPrefabs[_selectedBuildingPrefabIndex], pos, Quaternion.identity);
+            Building b = go.GetComponent<Building>();
+            t._building = b;
+            b._tile = t;
         }
+    }
+
+    private bool CheckResourcesForBuilding()
+    {
+        Building currentBuilding = _buildingPrefabs[_selectedBuildingPrefabIndex].GetComponent<Building>();
+        return (money > currentBuilding._build_cost_money && _resourcesInWarehouse[ResourceTypes.Planks] >= currentBuilding._build_cost_planks);
     }
 
     //Returns a list of all neighbors of a given tile
