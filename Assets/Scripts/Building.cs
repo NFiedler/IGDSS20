@@ -38,9 +38,8 @@ public class Building : MonoBehaviour
     public int _min_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
     public int _max_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
 
-    // TODO these 2 probably shouldn't be a string
-    private string input_ressource; // A choice for input resource types (0, 1 or 2 types)
-    private string output_ressource; // A choice for output resource type
+    private inputTypes input_ressource; // A choice for input resource types (0, 1 or 2 types)
+    private outputTypes output_ressource; // A choice for output resource type
 
     public void calc_efficiency() 
     {
@@ -146,4 +145,6 @@ public class Building : MonoBehaviour
     {
         
     }
+    public enum outputTypes {fish, wood, plank, wool, cloth, potato, schnapps}
+    public enum inputTypes {wood, wool, potato}
 }

@@ -257,17 +257,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishery: {fileID: 2746774114488504025, guid: 4cd787543f3378740a4950ddb5232696, type: 3}
-  lumberjack: {fileID: 0}
-  sheepfarm: {fileID: 0}
-  frameworkknitters: {fileID: 0}
-  potatofarm: {fileID: 0}
-  schnappsdistillery: {fileID: 0}
-  sawmill: {fileID: 0}
+  lumberjack: {fileID: 3900913404140413534, guid: 13ca18e6750a45741939834103c008a3,
+    type: 3}
+  sheepfarm: {fileID: 194894, guid: ed8d5d775bea0bf45b5c4d517d776e08, type: 3}
+  frameworkknitters: {fileID: 199186, guid: c446b7d19195ca34daa0c9562c68e0a3, type: 3}
+  potatofarm: {fileID: 184652, guid: ab8ad74f82a4c5c408d8c4c10a850276, type: 3}
+  schnappsdistillery: {fileID: 171010, guid: cd1689019917bf9458787a69b6a2ac59, type: 3}
+  sawmill: {fileID: 87842295797770037, guid: c2796a7a44d53674588c494a78dc1b84, type: 3}
   _buildingPrefabs: []
   _selectedBuildingPrefabIndex: 0
+  money: 1000
   _ResourcesInWarehouse_Fish: 0
   _ResourcesInWarehouse_Wood: 0
-  _ResourcesInWarehouse_Planks: 0
+  _ResourcesInWarehouse_Planks: 10
   _ResourcesInWarehouse_Wool: 0
   _ResourcesInWarehouse_Clothes: 0
   _ResourcesInWarehouse_Potato: 0
