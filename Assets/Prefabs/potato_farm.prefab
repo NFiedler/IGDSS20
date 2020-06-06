@@ -136,6 +136,8 @@ MonoBehaviour:
   _efficiency_scale_with_neighbor_tile: {fileID: 0}
   _min_neighbors: 1
   _max_neighbors: 4
+  input_ressource: 0
+  output_ressource: 5
 --- !u!1 &1450440730886174575
 GameObject:
   m_ObjectHideFlags: 0
