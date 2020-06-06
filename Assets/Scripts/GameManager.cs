@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject water_tile, sand_tile, mountain_tile, forest_tile, grass_tile, stone_tile;
 
+
+
     public float height_factor = 20f;
     // Start is called before the first frame update
     
@@ -80,33 +82,33 @@ public class GameManager : MonoBehaviour
                 if (pixelColor.b < 0.01)
                 {
 
-                    _tileMap[x, y] = new Tile(Tile.TileTypes.Water, x, y);
-                    Instantiate(water_tile, pos, Quaternion.identity);
+                    GameObject go = Instantiate(water_tile, pos, Quaternion.identity);
+                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
                 }
                 else if (pixelColor.b < 0.2)
                 {
-                    _tileMap[x, y] = new Tile(Tile.TileTypes.Sand, x, y);
-                    Instantiate(sand_tile, pos, Quaternion.identity);
+                    GameObject go = Instantiate(sand_tile, pos, Quaternion.identity);
+                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
                 }
                 else if (pixelColor.b < 0.4)
                 {
-                    _tileMap[x, y] = new Tile(Tile.TileTypes.Grass, x, y);
-                    Instantiate(grass_tile, pos, Quaternion.identity);
+                    GameObject go = Instantiate(grass_tile, pos, Quaternion.identity);
+                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
                 }
                 else if (pixelColor.b < 0.6)
                 {
-                    _tileMap[x, y] = new Tile(Tile.TileTypes.Forest, x, y);
-                    Instantiate(forest_tile, pos, Quaternion.identity);
+                    GameObject go = Instantiate(forest_tile, pos, Quaternion.identity);
+                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
                 }
                 else if (pixelColor.b < 0.8)
                 {
-                    _tileMap[x, y] = new Tile(Tile.TileTypes.Stone, x, y);
-                    Instantiate(stone_tile, pos, Quaternion.identity);
+                    GameObject go = Instantiate(stone_tile, pos, Quaternion.identity);
+                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
                 }
                 else
                 {
-                    _tileMap[x, y] = new Tile(Tile.TileTypes.Mountain, x, y);
-                    Instantiate(mountain_tile, pos, Quaternion.identity);
+                    GameObject go = Instantiate(mountain_tile, pos, Quaternion.identity);
+                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
                 }
             }
         }
@@ -226,6 +228,7 @@ public class GameManager : MonoBehaviour
             Color pixelColor = heightmap.GetPixel(x, y);
             Vector3 pos = new Vector3(y % 2 * line_offset + x * x_step, pixelColor.b * height_factor, y * y_step);
             Instantiate(_buildingPrefabs[_selectedBuildingPrefabIndex], pos, Quaternion.identity);
+            // TODO give to tile
         }
     }
 

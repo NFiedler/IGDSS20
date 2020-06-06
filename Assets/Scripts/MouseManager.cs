@@ -127,9 +127,8 @@ public class MouseManager : MonoBehaviour
             // check if object was hit
             if (Physics.Raycast(mouseRay, out hit, maxHeight + 200, 1000))
             {
-                UnityEngine.Vector3 pos = hit.collider.gameObject.GetComponent<Transform>().position;
-                int y = (int)Math.Round(pos.y / y_step);
-                int x = (int)Math.Round((pos.x - ((y % 2) * line_offset)) / x_step);
+                int x = hit.collider.gameObject.GetComponent<Tile>()._coordinateWidth;
+                int y = hit.collider.gameObject.GetComponent<Tile>()._coordinateHeight;
                 GameObject.Find("GameManager").GetComponent<GameManager>().TileClicked(x, y);
             }
         }
