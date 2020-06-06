@@ -146,5 +146,5 @@ public class Building : MonoBehaviour
         
     }
     public enum outputTypes {fish, wood, plank, wool, cloth, potato, schnapps}
-    public enum inputTypes {wood, wool, potato}
+    public enum inputTypes {none, wood, wool, potato}
 }
