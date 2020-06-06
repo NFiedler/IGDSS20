@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject fishery, lumberjack, sheepfarm, frameworkknitters, potatofarm, schnappsdistillery, sawmill;
     public List<GameObject> _buildingPrefabs; //References to the building prefabs
     public int _selectedBuildingPrefabIndex = 0; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
-    private List<Building> _buildings;
+    private List<Building> _buildings = new List<Building>();
     #endregion
 
 
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
         _resourcesInWarehouse.Add(ResourceTypes.None, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Fish, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Wood, 0);
-        _resourcesInWarehouse.Add(ResourceTypes.Planks, 0);
+        _resourcesInWarehouse.Add(ResourceTypes.Planks, 10);
         _resourcesInWarehouse.Add(ResourceTypes.Wool, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Clothes, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Potato, 0);
@@ -240,9 +240,9 @@ public class GameManager : MonoBehaviour
             Building b = go.GetComponent<Building>();
             t._building = b;
             b._tile = t;
-            Building currentBuilding = _buildingPrefabs[_selectedBuildingPrefabIndex].GetComponent<Building>();
-            _resourcesInWarehouse[ResourceTypes.Planks] -= currentBuilding._build_cost_planks;
-            money -= currentBuilding._build_cost_money;
+            //Building currentBuilding = _buildingPrefabs[_selectedBuildingPrefabIndex].GetComponent<Building>();
+            _resourcesInWarehouse[ResourceTypes.Planks] -= b._build_cost_planks;
+            money -= b._build_cost_money;
             _buildings.Add(b);
         }
     }
