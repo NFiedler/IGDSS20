@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics.Tracing;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    private Tile _tile; // tile the building is built on
+    public Tile _tile; // tile the building is built on
     private float _efficiency; // Calculated based on the surrounding tile types
     public int _upkeep; // money cost per minute
     public int _build_cost_money; // placement money cost
@@ -40,14 +42,13 @@ public class Building : MonoBehaviour
     private string input_ressource; // A choice for input resource types (0, 1 or 2 types)
     private string output_ressource; // A choice for output resource type
 
-    Building(Tile tile) 
+    public void calc_efficiency() 
     {
-        _tile = tile;
         if(_min_neighbors > 0)
         {
             if(water_must_be_neighbor)
             {
-                int neighbors = tile.GetNeigborTileCount(Tile.TileTypes.Water);
+                int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Water);
                 if(neighbors == 0)
                 {
                     // prevent division by zero
@@ -58,10 +59,11 @@ public class Building : MonoBehaviour
                     // prevent efficiency > 1
                     _efficiency = Math.Min(1, neighbors / _max_neighbors);
                 }
+                return;
             }
             else if(forest_must_be_neighbor)
             {
-                int neighbors = tile.GetNeigborTileCount(Tile.TileTypes.Forest);
+                int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Forest);
                 if (neighbors == 0)
                 {
                     // prevent division by zero
@@ -72,10 +74,11 @@ public class Building : MonoBehaviour
                     // prevent efficiency > 1
                     _efficiency = Math.Min(1, neighbors / _max_neighbors);
                 }
+                return;
             }
             else if(grass_must_be_neighbor)
             {
-                int neighbors = tile.GetNeigborTileCount(Tile.TileTypes.Grass);
+                int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Grass);
                 if (neighbors == 0)
                 {
                     // prevent division by zero
@@ -86,11 +89,51 @@ public class Building : MonoBehaviour
                     // prevent efficiency > 1
                     _efficiency = Math.Min(1, neighbors / _max_neighbors);
                 }
+                return;
             }
+            else
+            {
+                Debug.Log("Something went wrong in the efficiency calculation.");
+                return;
+            }
+        }
+        else
+        {
+            _efficiency = 1;
+            return;
         }
 
     }
 
+    public Boolean CanBeBuiltOn(Tile.TileTypes tile)
+    {
+    if(tile == Tile.TileTypes.Water)
+        {
+            return water_can_be_built_on;
+        }
+    if(tile == Tile.TileTypes.Sand)
+        {
+            return sand_can_be_built_on;
+        }
+    if(tile == Tile.TileTypes.Grass)
+        {
+            return grass_can_be_built_on;
+        }
+    if(tile == Tile.TileTypes.Forest)
+        {
+            return forest_can_be_built_on;
+        }
+    if(tile == Tile.TileTypes.Stone)
+        {
+            return stone_can_be_built_on;
+        }
+    if(tile == Tile.TileTypes.Mountain)
+        {
+            return mountain_can_be_built_on;
+        }
+    return false;
+
+}
 
     // Start is called before the first frame update
     void Start()
