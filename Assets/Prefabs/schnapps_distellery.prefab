@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e340f3719da3794428b0238d0d0094f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   _tile: {fileID: 0}
   _upkeep: 40
   _build_cost_money: 100
@@ -158,8 +159,8 @@ MonoBehaviour:
   _efficiency_scale_with_neighbor_tile: {fileID: 0}
   _min_neighbors: 0
   _max_neighbors: 0
-  input_ressource: 3
-  output_ressource: 6
+  input_ressource: 6
+  output_ressource: 7
 --- !u!1001 &425716137710110625
 PrefabInstance:
   m_ObjectHideFlags: 0

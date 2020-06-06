@@ -108,6 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e340f3719da3794428b0238d0d0094f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   _tile: {fileID: 0}
   _upkeep: 20
   _build_cost_money: 100
@@ -137,7 +138,7 @@ MonoBehaviour:
   _min_neighbors: 1
   _max_neighbors: 4
   input_ressource: 0
-  output_ressource: 5
+  output_ressource: 6
 --- !u!1 &1450440730886174575
 GameObject:
   m_ObjectHideFlags: 0

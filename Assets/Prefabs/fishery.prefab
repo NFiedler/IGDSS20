@@ -114,6 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e340f3719da3794428b0238d0d0094f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  _tile: {fileID: 0}
   _upkeep: 40
   _build_cost_money: 100
   _build_cost_planks: 2
@@ -138,8 +140,11 @@ MonoBehaviour:
   water_must_be_neighbor: 1
   forest_must_be_neighbor: 0
   grass_must_be_neighbor: 0
+  _efficiency_scale_with_neighbor_tile: {fileID: 0}
   _min_neighbors: 1
   _max_neighbors: 3
+  input_ressource: 0
+  output_ressource: 1
 --- !u!1001 &996782256353092812
 PrefabInstance:
   m_ObjectHideFlags: 0
