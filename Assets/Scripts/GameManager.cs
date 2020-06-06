@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
     private void PlaceBuildingOnTile(Tile t)
     {
         //if there is building prefab for the number input
-        if (_selectedBuildingPrefabIndex < _buildingPrefabs.Count && t._building == null && _buildingPrefabs[_selectedBuildingPrefabIndex].CanBeBuiltOn(t._type) && CheckResourcesForBuilding())
+        if (_selectedBuildingPrefabIndex < _buildingPrefabs.Count && t._building == null && _buildingPrefabs[_selectedBuildingPrefabIndex].GetComponent<Building>().CanBeBuiltOn(t._type) && CheckResourcesForBuilding())
         {
             int x = t._coordinateWidth;
             int y = t._coordinateHeight;
