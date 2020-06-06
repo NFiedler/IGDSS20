@@ -230,13 +230,16 @@ public class GameManager : MonoBehaviour
             Building b = go.GetComponent<Building>();
             t._building = b;
             b._tile = t;
+            Building currentBuilding = _buildingPrefabs[_selectedBuildingPrefabIndex].GetComponent<Building>();
+            _resourcesInWarehouse[ResourceTypes.Planks] -= currentBuilding._build_cost_planks;
+            money -= currentBuilding._build_cost_money;
         }
     }
 
     private bool CheckResourcesForBuilding()
     {
         Building currentBuilding = _buildingPrefabs[_selectedBuildingPrefabIndex].GetComponent<Building>();
-        return (money > currentBuilding._build_cost_money && _resourcesInWarehouse[ResourceTypes.Planks] >= currentBuilding._build_cost_planks);
+        return (money >= currentBuilding._build_cost_money && _resourcesInWarehouse[ResourceTypes.Planks] >= currentBuilding._build_cost_planks);
     }
 
     //Returns a list of all neighbors of a given tile
