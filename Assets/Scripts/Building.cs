@@ -38,8 +38,8 @@ public class Building : MonoBehaviour
     public int _min_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
     public int _max_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
 
-    private inputTypes input_ressource; // A choice for input resource types (0, 1 or 2 types)
-    private outputTypes output_ressource; // A choice for output resource type
+    public inputTypes input_ressource; // A choice for input resource types (0, 1 or 2 types)
+    public outputTypes output_ressource; // A choice for output resource type
 
     public void calc_efficiency() 
     {
