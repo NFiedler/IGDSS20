@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    private float timer = 0.0f;
+    public GameObject gameManager;
     public Tile _tile; // tile the building is built on
     private float _efficiency; // Calculated based on the surrounding tile types
     public int _upkeep; // money cost per minute
@@ -38,17 +40,17 @@ public class Building : MonoBehaviour
     public int _min_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
     public int _max_neighbors; // The minimum and maximum number of surrounding tiles its efficiency scales with (0-6)
 
-    public inputTypes input_ressource; // A choice for input resource types (0, 1 or 2 types)
-    public outputTypes output_ressource; // A choice for output resource type
+    public GameManager.ResourceTypes input_ressource; // A choice for input resource types (0, 1 or 2 types)
+    public GameManager.ResourceTypes output_ressource; // A choice for output resource type
 
-    public void calc_efficiency() 
+    public void calc_efficiency()
     {
-        if(_min_neighbors > 0)
+        if (_min_neighbors > 0)
         {
-            if(water_must_be_neighbor)
+            if (water_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Water);
-                if(neighbors == 0)
+                if (neighbors == 0)
                 {
                     // prevent division by zero
                     _efficiency = 0;
@@ -60,7 +62,7 @@ public class Building : MonoBehaviour
                 }
                 return;
             }
-            else if(forest_must_be_neighbor)
+            else if (forest_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Forest);
                 if (neighbors == 0)
@@ -75,7 +77,7 @@ public class Building : MonoBehaviour
                 }
                 return;
             }
-            else if(grass_must_be_neighbor)
+            else if (grass_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Grass);
                 if (neighbors == 0)
@@ -106,45 +108,59 @@ public class Building : MonoBehaviour
 
     public Boolean CanBeBuiltOn(Tile.TileTypes tile)
     {
-    if(tile == Tile.TileTypes.Water)
+        if (tile == Tile.TileTypes.Water)
         {
             return water_can_be_built_on;
         }
-    if(tile == Tile.TileTypes.Sand)
+        if (tile == Tile.TileTypes.Sand)
         {
             return sand_can_be_built_on;
         }
-    if(tile == Tile.TileTypes.Grass)
+        if (tile == Tile.TileTypes.Grass)
         {
             return grass_can_be_built_on;
         }
-    if(tile == Tile.TileTypes.Forest)
+        if (tile == Tile.TileTypes.Forest)
         {
             return forest_can_be_built_on;
         }
-    if(tile == Tile.TileTypes.Stone)
+        if (tile == Tile.TileTypes.Stone)
         {
             return stone_can_be_built_on;
         }
-    if(tile == Tile.TileTypes.Mountain)
+        if (tile == Tile.TileTypes.Mountain)
         {
             return mountain_can_be_built_on;
         }
-    return false;
+        return false;
 
-}
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (_efficiency > 0)
+        {
+            float interval = _resource_generation_interval + (1 - _efficiency) * 5 * _resource_generation_interval;
+                    timer += Time.deltaTime;
+
+                    if (timer >  interval)
+                    {
+                        GameManager gm = gameManager.GetComponent<GameManager>();
+                        if (gm._resourcesInWarehouse[input_ressource] >= 1)
+                        {
+                            gm._resourcesInWarehouse[input_ressource] -= 1;
+                            gm._resourcesInWarehouse[output_ressource] += _output_count;
+                        }
+                        timer = timer - interval;
+                    }
+        }
         
     }
-    public enum outputTypes {fish, wood, plank, wool, cloth, potato, schnapps}
-    public enum inputTypes {none, wood, wool, potato}
 }
