@@ -13,9 +13,9 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Buildings
-    public GameObject[] _buildingPrefabs; //References to the building prefabs
+    public GameObject fishery, lumberjack, sheepfarm, frameworkknitters, potatofarm, schnappsdistillery, sawmill;
+    public List<GameObject> _buildingPrefabs; //References to the building prefabs
     public int _selectedBuildingPrefabIndex = 0; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
-
     #endregion
 
 
@@ -58,7 +58,13 @@ public class GameManager : MonoBehaviour
         heightmap = Resources.Load("Heightmap_16", typeof(Texture2D)) as Texture2D; //Resources.Load("Assets/Textures/Heightmap_16") as Texture2D;
         //Texture2D heightmap = (Texture2D)Resources.LoadAssetAtPath("Assets/Textures/Heightmap_16", typeof(Texture2D));
         int x, y;
-
+        _buildingPrefabs.Add(fishery);
+        _buildingPrefabs.Add(lumberjack);
+        _buildingPrefabs.Add(sheepfarm);
+        _buildingPrefabs.Add(frameworkknitters);
+        _buildingPrefabs.Add(potatofarm);
+        _buildingPrefabs.Add(schnappsdistillery);
+        _buildingPrefabs.Add(sawmill);
 
         PopulateResourceDictionary();
 
@@ -213,7 +219,7 @@ public class GameManager : MonoBehaviour
     private void PlaceBuildingOnTile(Tile t)
     {
         //if there is building prefab for the number input
-        if (_selectedBuildingPrefabIndex < _buildingPrefabs.Length)
+        if (_selectedBuildingPrefabIndex < _buildingPrefabs.Count)
         {
             int x = t._coordinateWidth;
             int y = t._coordinateHeight;
