@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile
+public class Tile : MonoBehaviour
 {
-    public Tile(TileTypes type, int coordinateWidth, int coordinateHeight)
-    {
-        _type = type;
-        _coordinateHeight = coordinateHeight;
-        _coordinateWidth = coordinateWidth;
-    }
+    //public Tile(TileTypes type, int coordinateWidth, int coordinateHeight)
+    //{
+    //    _type = type;
+    //    _coordinateHeight = coordinateHeight;
+    //    _coordinateWidth = coordinateWidth;
+    //}
 
     public int GetNeigborTileCount(TileTypes type)
     {
