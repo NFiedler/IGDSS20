@@ -50,6 +50,7 @@ public class Building : MonoBehaviour
             if (water_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Water);
+                Debug.Log(neighbors);
                 if (neighbors == 0)
                 {
                     // prevent division by zero
@@ -58,13 +59,14 @@ public class Building : MonoBehaviour
                 else
                 {
                     // prevent efficiency > 1
-                    _efficiency = Math.Min(1, neighbors / _max_neighbors);
+                    _efficiency = Math.Min(1, (float) neighbors / (float) _max_neighbors);
                 }
                 return;
             }
             else if (forest_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Forest);
+                Debug.Log(neighbors);
                 if (neighbors == 0)
                 {
                     // prevent division by zero
@@ -73,13 +75,14 @@ public class Building : MonoBehaviour
                 else
                 {
                     // prevent efficiency > 1
-                    _efficiency = Math.Min(1, neighbors / _max_neighbors);
+                    _efficiency = Math.Min(1, (float) neighbors / (float) _max_neighbors);
                 }
                 return;
             }
             else if (grass_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Grass);
+                Debug.Log(neighbors);
                 if (neighbors == 0)
                 {
                     // prevent division by zero
@@ -88,7 +91,7 @@ public class Building : MonoBehaviour
                 else
                 {
                     // prevent efficiency > 1
-                    _efficiency = Math.Min(1, neighbors / _max_neighbors);
+                    _efficiency = Math.Min(1, (float) neighbors / (float) _max_neighbors);
                 }
                 return;
             }
@@ -139,7 +142,7 @@ public class Building : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        gameManager = GameObject.Find("GameManager");
     }
 
     // Update is called once per frame
@@ -147,15 +150,18 @@ public class Building : MonoBehaviour
     {
         if (_efficiency > 0)
         {
-            float interval = _resource_generation_interval + (1 - _efficiency) * 5 * _resource_generation_interval;
+            float interval = _resource_generation_interval + (1 - _efficiency) * 3 * _resource_generation_interval;
                     timer += Time.deltaTime;
 
                     if (timer >  interval)
                     {
                         GameManager gm = gameManager.GetComponent<GameManager>();
-                        if (gm._resourcesInWarehouse[input_ressource] >= 1)
+                        if (input_ressource == GameManager.ResourceTypes.None || gm._resourcesInWarehouse[input_ressource] >= 1)
                         {
-                            gm._resourcesInWarehouse[input_ressource] -= 1;
+                            if (input_ressource != GameManager.ResourceTypes.None)
+                            {
+                                gm._resourcesInWarehouse[input_ressource] -= 1;
+                            }
                             gm._resourcesInWarehouse[output_ressource] += _output_count;
                         }
                         timer = timer - interval;

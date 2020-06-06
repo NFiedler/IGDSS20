@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject fishery, lumberjack, sheepfarm, frameworkknitters, potatofarm, schnappsdistillery, sawmill;
     public List<GameObject> _buildingPrefabs; //References to the building prefabs
     public int _selectedBuildingPrefabIndex = 0; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
-    private List<Building> _buildings;
+    private List<Building> _buildings = new List<Building>();
     #endregion
 
 
@@ -240,6 +240,7 @@ public class GameManager : MonoBehaviour
             Building b = go.GetComponent<Building>();
             t._building = b;
             b._tile = t;
+            b.calc_efficiency();
             Building currentBuilding = _buildingPrefabs[_selectedBuildingPrefabIndex].GetComponent<Building>();
             _resourcesInWarehouse[ResourceTypes.Planks] -= currentBuilding._build_cost_planks;
             money -= currentBuilding._build_cost_money;
@@ -277,53 +278,52 @@ public class GameManager : MonoBehaviour
         int xSize = _tileMap.GetLength(0);
         int ySize = _tileMap.GetLength(1);
 
-        if (x - 1 >= 0)
-        {
-            result.Add(_tileMap[x - 1, y]);
-        }
-        if(x + 1 < xSize)
-        {
-            result.Add(_tileMap[x + 1, y]);
-        }
-
-        if(y - 1 >= 0)
+        if (y - 1 >= 0)
         {
             result.Add(_tileMap[x, y - 1]);
+        }
+        if(y + 1 < ySize)
+        {
+            result.Add(_tileMap[x, y + 1]);
+        }
 
-            if(y % 2 > 0)  // indented
+        if (y - 2 >= 0)
+        {
+            result.Add(_tileMap[x, y - 2]);
+        }
+        if (y + 2 < ySize)
+        {
+            result.Add(_tileMap[x, y + 2]);
+        }
+
+        // if height even :  width - 1
+        // if height odd : width + 1
+        bool even = (y % 2) == 0;
+
+        if(even && (x - 1 >= 0))
+        {
+            if (y - 1 >= 0)
             {
-                if(x - 1 >= 0)
-                {
-                    result.Add(_tileMap[x - 1, y - 1]);
-                }
+                result.Add(_tileMap[x - 1, y - 1]);
             }
-            else  // unindented
+            if (y + 1 < ySize)
             {
-                if (x + 1 < xSize)
+                result.Add(_tileMap[x - 1, y + 1]);
+            }
+        }
+
+        if(!even && (x + 1 < xSize))
+            {
+                if (y - 1 >= 0)
                 {
                     result.Add(_tileMap[x + 1, y - 1]);
                 }
-            }
-        }
-
-        if (y + 1 < ySize)
-        {
-            result.Add(_tileMap[x, y + 1]);
-
-            if (y % 2 > 0)  // indented
-            {
-                if (x - 1 >= 0)
-                {
-                    result.Add(_tileMap[x - 1, y + 1]);
-                }
-            }
-            else  // unindented
-            {
-                if (x + 1 < xSize)
+                if (y + 1 < ySize)
                 {
                     result.Add(_tileMap[x + 1, y + 1]);
-                }
             }
+
+
         }
 
         return result;
