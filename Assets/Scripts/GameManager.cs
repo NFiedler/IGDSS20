@@ -78,38 +78,36 @@ public class GameManager : MonoBehaviour
             {
                 Color pixelColor = heightmap.GetPixel(x, y);
                 Vector3 pos = new Vector3(y % 2 * line_offset + x * x_step, pixelColor.b * height_factor, y * y_step);
-
+                GameObject go;
                 if (pixelColor.b < 0.01)
                 {
 
-                    GameObject go = Instantiate(water_tile, pos, Quaternion.identity);
-                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
+                    go = Instantiate(water_tile, pos, Quaternion.identity);
                 }
                 else if (pixelColor.b < 0.2)
                 {
-                    GameObject go = Instantiate(sand_tile, pos, Quaternion.identity);
-                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
+                    go = Instantiate(sand_tile, pos, Quaternion.identity);
                 }
                 else if (pixelColor.b < 0.4)
                 {
-                    GameObject go = Instantiate(grass_tile, pos, Quaternion.identity);
-                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
+                    go = Instantiate(grass_tile, pos, Quaternion.identity);
                 }
                 else if (pixelColor.b < 0.6)
                 {
-                    GameObject go = Instantiate(forest_tile, pos, Quaternion.identity);
-                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
+                    go = Instantiate(forest_tile, pos, Quaternion.identity);
                 }
                 else if (pixelColor.b < 0.8)
                 {
-                    GameObject go = Instantiate(stone_tile, pos, Quaternion.identity);
-                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
+                    go = Instantiate(stone_tile, pos, Quaternion.identity);
                 }
                 else
                 {
-                    GameObject go = Instantiate(mountain_tile, pos, Quaternion.identity);
-                    _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
+                    go = Instantiate(mountain_tile, pos, Quaternion.identity);
                 }
+
+                _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
+                _tileMap[x, y]._coordinateWidth = x;
+                _tileMap[x, y]._coordinateHeight = y;
             }
         }
 
