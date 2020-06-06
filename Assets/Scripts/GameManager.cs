@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,7 +8,8 @@ public class GameManager : MonoBehaviour
 {
 
 
-
+    public float economyWaitTime = 60.0f;
+    private float timer = 0.0f;
     #region Map generation
     private Tile[,] _tileMap; //2D array of all spawned tiles
     #endregion
@@ -16,6 +18,7 @@ public class GameManager : MonoBehaviour
     public GameObject fishery, lumberjack, sheepfarm, frameworkknitters, potatofarm, schnappsdistillery, sawmill;
     public List<GameObject> _buildingPrefabs; //References to the building prefabs
     public int _selectedBuildingPrefabIndex = 0; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
+    private List<Building> _buildings;
     #endregion
 
 
@@ -127,6 +130,13 @@ public class GameManager : MonoBehaviour
     {
         HandleKeyboardInput();
         UpdateInspectorNumbersForResources();
+        timer += Time.deltaTime;
+
+        if (timer > economyWaitTime)
+        {
+            EconomyCycle();
+            timer = timer - economyWaitTime;
+        }
     }
     #endregion
 
@@ -233,6 +243,21 @@ public class GameManager : MonoBehaviour
             Building currentBuilding = _buildingPrefabs[_selectedBuildingPrefabIndex].GetComponent<Building>();
             _resourcesInWarehouse[ResourceTypes.Planks] -= currentBuilding._build_cost_planks;
             money -= currentBuilding._build_cost_money;
+            _buildings.Add(b);
+        }
+    }
+
+    private void EconomyCycle()
+    {
+        money += 100;
+        PayUpkeep();
+    }
+
+    private void PayUpkeep()
+    {
+        foreach(Building b in _buildings)
+        {
+            money -= b._upkeep;
         }
     }
 
