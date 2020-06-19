@@ -223,6 +223,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1860821473}
   - component: {fileID: 1860821474}
+  - component: {fileID: 1860821475}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -256,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd580981bf7ab5845976a690fd1035a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  economyWaitTime: 60
   fishery: {fileID: 2746774114488504025, guid: 4cd787543f3378740a4950ddb5232696, type: 3}
   lumberjack: {fileID: 3900913404140413534, guid: 13ca18e6750a45741939834103c008a3,
     type: 3}
@@ -264,6 +266,7 @@ MonoBehaviour:
   potatofarm: {fileID: 184652, guid: ab8ad74f82a4c5c408d8c4c10a850276, type: 3}
   schnappsdistillery: {fileID: 171010, guid: cd1689019917bf9458787a69b6a2ac59, type: 3}
   sawmill: {fileID: 87842295797770037, guid: c2796a7a44d53674588c494a78dc1b84, type: 3}
+  house: {fileID: 1073637081092319650, guid: c4566bb8a3169d443a4167b2321bb8b1, type: 3}
   _buildingPrefabs: []
   _selectedBuildingPrefabIndex: 0
   money: 1000
@@ -287,6 +290,19 @@ MonoBehaviour:
   stone_tile: {fileID: 5044814526144528268, guid: 476946919e1d5104fb4c93f1dc2db5e9,
     type: 3}
   height_factor: 20
+--- !u!114 &1860821475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1860821472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8353f6fa661bfa540ab16d4eec33cf0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unoccupiedWorkers: []
 --- !u!1 &2019230412
 GameObject:
   m_ObjectHideFlags: 0

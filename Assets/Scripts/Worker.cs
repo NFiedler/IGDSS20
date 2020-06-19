@@ -28,7 +28,9 @@ public class Worker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = gameManager.GetComponent<GameManager>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _jobManager = GameObject.Find("JobManager").GetComponent<JobManager>();
+        Debug.LogError(gameManager);
     }
 
     // Update is called once per frame
@@ -76,6 +78,12 @@ public class Worker : MonoBehaviour
 
     private void consume()
     {
+        // for some reason consume is called before start
+        // WTF?!?
+        // thus we have to find the game manager here too?
+        // tested by printing in the start function. that print (even with logerror) is shown after the null pointer exception here
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
         if (gameManager._resourcesInWarehouse[GameManager.ResourceTypes.Fish] >= 0.001f)
         {
             gameManager._resourcesInWarehouse[GameManager.ResourceTypes.Fish] -= 0.001f;
@@ -151,6 +159,7 @@ public class Worker : MonoBehaviour
     public void SetAge(int age)
     {
         // we set the age to age - 1 and immediately let age put it to +1
+        // this means that the worker can immediately take up a job
         _age = age - 1;
         timer = 15f;
         Age();

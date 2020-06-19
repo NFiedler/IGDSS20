@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Buildings
-    public GameObject fishery, lumberjack, sheepfarm, frameworkknitters, potatofarm, schnappsdistillery, sawmill;
+    public GameObject fishery, lumberjack, sheepfarm, frameworkknitters, potatofarm, schnappsdistillery, sawmill, house;
     public List<GameObject> _buildingPrefabs; //References to the building prefabs
     public int _selectedBuildingPrefabIndex = 0; //The current index used for choosing a prefab to spawn from the _buildingPrefabs list
     private List<Building> _buildings = new List<Building>();
@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
         _buildingPrefabs.Add(potatofarm);
         _buildingPrefabs.Add(schnappsdistillery);
         _buildingPrefabs.Add(sawmill);
+        _buildingPrefabs.Add(house);
 
         PopulateResourceDictionary();
 
@@ -253,7 +254,15 @@ public class GameManager : MonoBehaviour
 
     private void EconomyCycle()
     {
-        money += 100;
+        foreach(Building b in _buildings)
+        {
+            if(b.housingBuilding)
+            {
+                money += ((HousingBuilding) b).workers.Count * 10;
+            }
+        }
+        // if the apocalypse hits you will still get some money :)
+        money += 10;
         PayUpkeep();
     }
 

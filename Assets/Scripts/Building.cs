@@ -17,6 +17,7 @@ public abstract class Building : MonoBehaviour
     public bool mountain_can_be_built_on;
 
     public bool productionBuilding = false;
+    public bool housingBuilding = false;
 
     public GameObject gameManager;
 
