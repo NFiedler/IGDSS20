@@ -25,12 +25,13 @@ public class Worker : MonoBehaviour
 
     public bool hasAJob = false;
 
+    public Job job;
+
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        _jobManager = GameObject.Find("JobManager").GetComponent<JobManager>();
-        Debug.LogError(gameManager);
+        _jobManager = GameObject.Find("GameManager").GetComponent<JobManager>();
     }
 
     // Update is called once per frame
@@ -143,17 +144,29 @@ public class Worker : MonoBehaviour
 
     public void BecomeOfAge()
     {
+        _jobManager = GameObject.Find("GameManager").GetComponent<JobManager>();
         _jobManager.RegisterWorker(this);
     }
 
     private void Retire()
     {
         _jobManager.RemoveWorker(this);
+        if (job != null)
+        {
+            job.RemoveWorker(this);
+            job = null;
+        }
     }
 
     private void Die()
     {
         Destroy(this.gameObject, 1f);
+        // in case at some point of the future workers can die before they have brought glory to the supreme leader by working until retirement:
+        if(job != null)
+        {
+            job.RemoveWorker(this);
+            job = null;
+        }
     }
 
     public void SetAge(int age)

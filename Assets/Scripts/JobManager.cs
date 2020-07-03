@@ -20,7 +20,15 @@ public class JobManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        foreach (Worker w in _unoccupiedWorkers)
+        {
+            if (w == null)
+            {
+                _unoccupiedWorkers.Remove(w);
+            }
+        }
         HandleUnoccupiedWorkers();
+
     }
     #endregion
 
@@ -29,11 +37,12 @@ public class JobManager : MonoBehaviour
 
     private void HandleUnoccupiedWorkers()
     {
-        if (_unoccupiedWorkers.Count > 0)
+        if (_unoccupiedWorkers.Count > 0 && _availableJobs.Count > 0)
         {
-
-            //TODO: What should be done with unoccupied workers?
-
+            // This could be done in a loop. 
+            // We liked the idea better to call it once every update, because now it becomes an animation instead
+            // Instead of 50 people showing up in one instant at the Schnapps Distillery, they show up one after another
+            assignWorker(_unoccupiedWorkers[0]);
         }
     }
 
@@ -47,7 +56,27 @@ public class JobManager : MonoBehaviour
     public void RemoveWorker(Worker w)
     {
         _unoccupiedWorkers.Remove(w);
+        _availableJobs.Add(w.job);
     }
 
+    public void addJob(Job j)
+    {
+        _availableJobs.Add(j);
+    }
+
+    private void assignWorker(Worker w)
+    {
+        Job job = _availableJobs[Random.Range(0, _availableJobs.Count)];
+        if(job == null)
+        {
+            _availableJobs.Remove(job);
+            return;
+        }
+        w.job = job;
+        w.hasAJob = true;
+        job._worker = w;
+        _unoccupiedWorkers.Remove(w);
+        _availableJobs.Remove(job);
+    }
     #endregion
 }

@@ -36,21 +36,35 @@ public class HousingBuilding : Building
     {
         timer += Time.deltaTime;
 
-
-
-        if (timer >= spawnTimer  + (1 - CalcEfficiency()) * 3 * spawnTimer)
+        if (timer >= spawnTimer  + (1 - CalcEfficiency()) * 2 * spawnTimer)
             {
                 createWorker();
+                timer = 0f;
             }
 
         }
 
         private GameObject createWorker()
     {
+        foreach (GameObject w in workers)
+        {
+            if (w == null)
+            {
+                workers.Remove(w);
+            }
+        }
         if (workers.Count < 10)
         {
+            GameObject worker;
+            if(Random.Range(0,2) == 1)
+            {
+                worker = GameObject.Instantiate(worker_female, _tile.transform.position, Quaternion.identity);
+            }
+            else
+            {
+                worker = GameObject.Instantiate(worker_male, _tile.transform.position, Quaternion.identity);
+            }
             //GameObject worker = GameObject.Instantiate(possibleWorkers[Random.Range(0, 2)], _tile.transform.position, Quaternion.identity);
-            GameObject worker = GameObject.Instantiate(worker_female, _tile.transform.position, Quaternion.identity);
 
             workers.Add(worker);
             rearrangeWorkers();
@@ -65,8 +79,9 @@ public class HousingBuilding : Building
     {
         for (int i = 0; i < workers.Count; i++)
         {
-            double x = workers[i].transform.position.x - 4 + 0.6 * i;
-            workers[i].transform.position = new Vector3((float) x, workers[i].transform.position.y, workers[i].transform.position.z);
+            float x = _tile.transform.position.x - 4 + 0.8f * i;
+            float z = _tile.transform.position.z - 2;
+            workers[i].transform.position = new Vector3((float) x, workers[i].transform.position.y, z);
         }
     }
 
@@ -75,6 +90,11 @@ public class HousingBuilding : Building
         double efficiency = 0;
         foreach(GameObject w in workers)
         {
+            if (w == null)
+            {
+                workers.Remove(w);
+                return CalcEfficiency();
+            }
             efficiency += (double) w.GetComponent<Worker>()._happiness;
         }
         // calc average efficiency, divide by 10, to have values between 0 and 1

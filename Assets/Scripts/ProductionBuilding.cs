@@ -32,73 +32,98 @@ public class ProductionBuilding : Building
     public GameManager.ResourceTypes input_ressource; // A choice for input resource types (0, 1 or 2 types)
     public GameManager.ResourceTypes output_ressource; // A choice for output resource type
 
+    public int availableJobs;
+    private List<Job> jobList = new List<Job>();
+    public int workerCount;
+
 
     public void calc_efficiency()
     {
+        _efficiency = (calc_tile_efficiency() + calc_worker_efficiency()) / 2;
+
+    }
+
+    private float calc_tile_efficiency()
+    {
+        float efficiency;
         if (_min_neighbors > 0)
         {
             if (water_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Water);
-                Debug.Log(neighbors);
                 if (neighbors == 0)
                 {
                     // prevent division by zero
-                    _efficiency = 0;
+                    efficiency = 0;
                 }
                 else
                 {
                     // prevent efficiency > 1
-                    _efficiency = Math.Min(1, (float) neighbors / (float) _max_neighbors);
+                    efficiency = Math.Min(1, (float)neighbors / (float)_max_neighbors);
                 }
-                return;
+                return efficiency;
             }
             else if (forest_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Forest);
-                Debug.Log(neighbors);
                 if (neighbors == 0)
                 {
                     // prevent division by zero
-                    _efficiency = 0;
+                    efficiency = 0;
                 }
                 else
                 {
                     // prevent efficiency > 1
-                    _efficiency = Math.Min(1, (float) neighbors / (float) _max_neighbors);
+                    efficiency = Math.Min(1, (float)neighbors / (float)_max_neighbors);
                 }
-                return;
+                return efficiency;
             }
             else if (grass_must_be_neighbor)
             {
                 int neighbors = _tile.GetNeigborTileCount(Tile.TileTypes.Grass);
-                Debug.Log(neighbors);
                 if (neighbors == 0)
                 {
                     // prevent division by zero
-                    _efficiency = 0;
+                    efficiency = 0;
                 }
                 else
                 {
                     // prevent efficiency > 1
-                    _efficiency = Math.Min(1, (float) neighbors / (float) _max_neighbors);
+                    efficiency = Math.Min(1, (float)neighbors / (float)_max_neighbors);
                 }
-                return;
+                return efficiency;
             }
             else
             {
-                Debug.Log("Something went wrong in the efficiency calculation.");
-                return;
+                Debug.LogError("Something went wrong in the efficiency calculation.");
+                return 0;
             }
         }
         else
         {
-            _efficiency = 1;
-            return;
+            efficiency = 1;
+            return efficiency;
         }
-
     }
+    private float calc_worker_efficiency()
+    {
+        int jobsFilled = 0;
+        float happinessSum = 0;
+        foreach(Job j in jobList)
+        {
+            if (j._worker != null)
+            {
+                jobsFilled += 1;
+                happinessSum += j._worker._happiness;
+            }
+        }
+        float avgHappiness = happinessSum / jobsFilled;
+        workerCount = jobsFilled;
 
+        // we want a value between 0 and 1 so we divide the happiness by its maximum value
+        // and then we divide by 2, because we have 2 parameters going up to 1 each
+        return ((avgHappiness / 10) + (jobsFilled / availableJobs)) / 2;
+    }
 
 
     // Start is called before the first frame update
@@ -106,11 +131,19 @@ public class ProductionBuilding : Building
     {
         base.Start();
         productionBuilding = true;
+        JobManager jobman = gameManager.GetComponent<JobManager>();
+        for(int i = 0; i < availableJobs; i++)
+        {
+            Job job = new Job(this);
+            jobList.Add(job);
+            jobman.addJob(job);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        calc_efficiency();
         if (_efficiency > 0)
         {
             float interval = _resource_generation_interval + (1 - _efficiency) * 3 * _resource_generation_interval;

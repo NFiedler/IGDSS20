@@ -107,22 +107,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e340f3719da3794428b0238d0d0094f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
-  _tile: {fileID: 0}
   _upkeep: 20
   _build_cost_money: 100
   _build_cost_planks: 2
-  _resource_generation_interval: 30
-  _output_count: 1
-  input_is_wood: 0
-  input_is_wool: 0
-  input_is_potato: 0
+  _tile: {fileID: 0}
   water_can_be_built_on: 0
   sand_can_be_built_on: 0
   grass_can_be_built_on: 1
   forest_can_be_built_on: 0
   stone_can_be_built_on: 0
   mountain_can_be_built_on: 0
+  productionBuilding: 0
+  housingBuilding: 0
+  gameManager: {fileID: 0}
+  _workers: []
+  _resource_generation_interval: 30
+  _output_count: 1
+  input_is_wood: 0
+  input_is_wool: 0
+  input_is_potato: 0
   fish_is_output: 0
   wood_is_output: 0
   planks_is_output: 0
@@ -138,6 +141,7 @@ MonoBehaviour:
   _max_neighbors: 4
   input_ressource: 0
   output_ressource: 4
+  availableJobs: 10
 --- !u!1001 &5778380479109230667
 PrefabInstance:
   m_ObjectHideFlags: 0
