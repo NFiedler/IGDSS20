@@ -108,8 +108,9 @@ public class Worker : MonoBehaviour
             {
                 newy = to.position.y;
             }
-            _walkIteration += 1;
+            _walkIteration += 1; 
             _workerObject.GetComponent<Transform>().position = new Vector3(newx, newy, newz);
+            _workerObject.GetComponent<Transform>().rotation = Quaternion.Euler(0, Mathf.Atan2((to.position.x - from.position.x), (to.position.z - from.position.z)) * Mathf.Rad2Deg, 0);
         }
         else
         {
