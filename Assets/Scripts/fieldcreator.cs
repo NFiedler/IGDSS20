@@ -7,23 +7,28 @@ using UnityEngine.WSA;
 
 public class fieldcreator
 {
-    Dictionary<Tile, int> tileweights;
+    List<int>[,] tileweights;
 
     public fieldcreator(Building b)
     {
-        tileweights = new Dictionary<Tile, int>();
+        //tileweights = new Dictionary<Tile, int>();
         calcweight(b._tile, 0);
+    }
+
+    private void ExpandNeighbors(Tile t)
+    {
+
     }
 
     private int calcweight(Tile t, int prevWeight)
     {
-        int weight = prevWeight
+        int weight = prevWeight;
         while (true)
         {
             foreach (Tile tile in t._neighborTiles)
             {
                 
-                if (!tileweights.ContainsKey(tile))
+                if (false)
                 {
                     calcweight(tile, weight);
                 }

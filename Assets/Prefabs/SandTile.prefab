@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17f6b6ef73bfaea44b968986df7fc5eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pathfindingCost: 2
   _type: 2
+  _building: {fileID: 0}
   _neighborTiles: []
   _coordinateHeight: 0
   _coordinateWidth: 0

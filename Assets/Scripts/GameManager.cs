@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public float economyWaitTime = 60.0f;
     private float timer = 0.0f;
     #region Map generation
-    private Tile[,] _tileMap; //2D array of all spawned tiles
+    public Tile[,] _tileMap; //2D array of all spawned tiles
     #endregion
 
     #region Buildings
@@ -111,6 +111,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 _tileMap[x, y] = go.GetComponent<Tile>() as Tile;
+                _tileMap[x, y]._tileObject = go;
                 _tileMap[x, y]._coordinateWidth = x;
                 _tileMap[x, y]._coordinateHeight = y;
             }
@@ -240,6 +241,7 @@ public class GameManager : MonoBehaviour
             GameObject go = Instantiate(_buildingPrefabs[_selectedBuildingPrefabIndex], pos, Quaternion.identity);
             Building b = go.GetComponent<Building>();
             t._building = b;
+            t._costMap = GameObject.Find("GameManager").GetComponent<NavigationManager>().GetCostMap(x, y);
             b._tile = t;
             if (b.productionBuilding)
             {

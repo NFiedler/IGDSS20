@@ -65,7 +65,8 @@ public class HousingBuilding : Building
                 worker = GameObject.Instantiate(worker_male, _tile.transform.position, Quaternion.identity);
             }
             //GameObject worker = GameObject.Instantiate(possibleWorkers[Random.Range(0, 2)], _tile.transform.position, Quaternion.identity);
-
+            worker.GetComponent<Worker>()._homeTile = this._tile;
+            worker.GetComponent<Worker>()._workerObject = worker;
             workers.Add(worker);
             rearrangeWorkers();
             return worker;

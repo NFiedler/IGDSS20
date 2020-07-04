@@ -7,7 +7,10 @@ public class JobManager : MonoBehaviour
 
     private List<Job> _availableJobs = new List<Job>();
     public List<Worker> _unoccupiedWorkers = new List<Worker>();
+    public List<Worker> _occupiedWorkers = new List<Worker>();
 
+    public float commuteWaitTime = 30.0f;
+    private float timer = 0.0f;
 
 
     #region MonoBehaviour
@@ -28,7 +31,16 @@ public class JobManager : MonoBehaviour
             }
         }
         HandleUnoccupiedWorkers();
+        timer += Time.deltaTime;
 
+        if (timer > commuteWaitTime)
+        {
+            foreach(Worker w in _occupiedWorkers)
+            {
+                w.Commute();
+            }
+            timer = timer - commuteWaitTime;
+        }
     }
     #endregion
 
@@ -77,6 +89,7 @@ public class JobManager : MonoBehaviour
         job._worker = w;
         _unoccupiedWorkers.Remove(w);
         _availableJobs.Remove(job);
+        _occupiedWorkers.Add(w);
     }
     #endregion
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using UnityEngine;
 
 public class Worker : MonoBehaviour
@@ -8,6 +9,7 @@ public class Worker : MonoBehaviour
     #region Manager References
     JobManager _jobManager; //Reference to the JobManager
     GameManager _gameManager;//Reference to the GameManager
+    NavigationManager _navigartionManager;
     #endregion
 
     public float _age; // The age of this worker
@@ -18,10 +20,21 @@ public class Worker : MonoBehaviour
 
     private bool ofAge = false;
     private bool retired = false;
+    public GameObject _workerObject;
 
     GameManager gameManager;
 
     float happiness = 10;
+
+    bool _atWork = false;
+    bool _arrived = true;
+    int _walkIteration;
+    public int _walkIterationCount;
+
+    public Tile _homeTile;
+    Tile _currentGoalTile;
+    Tile _currentTile;
+    Tile _nextGoalTile;
 
     public bool hasAJob = false;
 
@@ -31,6 +44,7 @@ public class Worker : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _navigartionManager = GameObject.Find("GameManager").GetComponent<NavigationManager>();
         _jobManager = GameObject.Find("GameManager").GetComponent<JobManager>();
     }
 
@@ -40,6 +54,83 @@ public class Worker : MonoBehaviour
         Age();
     }
 
+    public void Commute()
+    {
+        if(_atWork)
+        {
+            CommuteHome();
+        }
+        else
+        {
+            CommuteToWork();
+        }
+    }
+
+    private void CommuteToWork()
+    {
+        if(job == null)
+        {
+            return;
+        }
+        _arrived = false;
+        _currentGoalTile = job._building._tile;
+        _currentTile = _homeTile;
+
+
+    }
+
+    private void CommuteHome()
+    {
+        _arrived = false;
+        _currentGoalTile = _homeTile;
+        _currentTile = job._building._tile;
+    }
+
+    private void MovementIteration()
+    {
+        if(_arrived)
+        {
+            return;
+        }
+        if(_walkIteration <= _walkIterationCount)
+        {
+            Transform from = _currentTile._tileObject.GetComponent<Transform>();
+            Transform to = _nextGoalTile._tileObject.GetComponent<Transform>();
+            float newx = ((to.position.x - from.position.x) / _walkIterationCount) * _walkIteration;
+            float newz = ((to.position.z - from.position.z) / _walkIterationCount) * _walkIteration;
+            float newy = from.position.y;
+            if(_walkIteration > _walkIterationCount/2)
+            {
+                newy = to.position.y;
+            }
+        }
+        else
+        {
+            _currentTile = _nextGoalTile;
+            _nextGoalTile = FindNextGoalTile(_currentTile, _currentGoalTile);
+            _walkIteration = 0;
+        }
+    }
+
+    private Tile FindNextGoalTile(Tile currentTile, Tile goalTile)
+    {
+        if(goalTile._costMap[currentTile._coordinateWidth, currentTile._coordinateHeight] == 0) // if we are at the goal
+        {
+            _arrived = true;
+            return null;
+        }
+        int minWeight = 500000;
+        Tile minWeightTile = null;
+        foreach(Tile t in currentTile._neighborTiles)
+        {
+            if(goalTile._costMap[t._coordinateWidth, t._coordinateHeight] < minWeight)
+            {
+                minWeightTile = t;
+                minWeight = goalTile._costMap[t._coordinateWidth, t._coordinateHeight];
+            }
+        }
+        return minWeightTile;
+    }
 
     private void Age()
     {
@@ -154,6 +245,7 @@ public class Worker : MonoBehaviour
         if (job != null)
         {
             job.RemoveWorker(this);
+            _jobManager._occupiedWorkers.Remove(this);
             job = null;
         }
     }
