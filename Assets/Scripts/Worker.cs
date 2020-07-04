@@ -29,7 +29,7 @@ public class Worker : MonoBehaviour
     bool _atWork = false;
     bool _arrived = true;
     int _walkIteration;
-    public int _walkIterationCount;
+    public int _walkIterationCount = 100;
 
     public Tile _homeTile;
     Tile _currentGoalTile;
@@ -52,11 +52,12 @@ public class Worker : MonoBehaviour
     void Update()
     {
         Age();
+        MovementIteration();
     }
 
     public void Commute()
     {
-        if(_atWork)
+        if (_atWork)
         {
             CommuteHome();
         }
@@ -68,6 +69,7 @@ public class Worker : MonoBehaviour
 
     private void CommuteToWork()
     {
+        Debug.Log("Walking to work");
         if(job == null)
         {
             return;
@@ -75,15 +77,18 @@ public class Worker : MonoBehaviour
         _arrived = false;
         _currentGoalTile = job._building._tile;
         _currentTile = _homeTile;
-
-
+        _nextGoalTile = FindNextGoalTile(_currentTile, _currentGoalTile);
+        _atWork = true;
     }
 
     private void CommuteHome()
     {
+        Debug.Log("Walking to home");
         _arrived = false;
         _currentGoalTile = _homeTile;
         _currentTile = job._building._tile;
+        _nextGoalTile = FindNextGoalTile(_currentTile, _currentGoalTile);
+        _atWork = false;
     }
 
     private void MovementIteration()
@@ -96,13 +101,15 @@ public class Worker : MonoBehaviour
         {
             Transform from = _currentTile._tileObject.GetComponent<Transform>();
             Transform to = _nextGoalTile._tileObject.GetComponent<Transform>();
-            float newx = ((to.position.x - from.position.x) / _walkIterationCount) * _walkIteration;
-            float newz = ((to.position.z - from.position.z) / _walkIterationCount) * _walkIteration;
+            float newx = from.position.x + ((to.position.x - from.position.x) / _walkIterationCount) * _walkIteration;
+            float newz = from.position.z + ((to.position.z - from.position.z) / _walkIterationCount) * _walkIteration;
             float newy = from.position.y;
             if(_walkIteration > _walkIterationCount/2)
             {
                 newy = to.position.y;
             }
+            _walkIteration += 1;
+            _workerObject.GetComponent<Transform>().position = new Vector3(newx, newy, newz);
         }
         else
         {

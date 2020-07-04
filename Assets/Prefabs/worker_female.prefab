@@ -527,6 +527,9 @@ MonoBehaviour:
   _age: 0
   _happiness: 0
   ageWaitTime: 15
+  _workerObject: {fileID: 0}
+  _walkIterationCount: 100
+  _homeTile: {fileID: 0}
   hasAJob: 0
 --- !u!1 &6877582043836099445
 GameObject:

@@ -10,23 +10,16 @@ public class NavigationManager : MonoBehaviour
 
     int _n = 500000;
     int _k = 1000000;
-
+    bool once = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        _baseCostMap = new int[_gameManager._tileMap.GetLength(0), _gameManager._tileMap.GetLength(1)];
-        for (int x = 0; x < _gameManager._tileMap.GetLength(0); x++)
-        {
-            for (int y = 0; y < _gameManager._tileMap.GetLength(1); y++)
-            {
-                _baseCostMap[x, y] = _gameManager._tileMap[x, y]._pathfindingCost;
-            }
-        }
+
     }
     public int[,] GetCostMap(int x, int y)
     {
+        Debug.Log("We are starting the cost map");
         int a, b;
         int[,] costMap = new int[_baseCostMap.GetLength(0), _baseCostMap.GetLength(0)];
         for (a = 0; a < _baseCostMap.GetLength(0); a++)
@@ -81,7 +74,10 @@ public class NavigationManager : MonoBehaviour
     {
         foreach(Tuple<int, int> c in GetNeigborCoordinates(x, y))
         {
-            inArray[c.Item1, c.Item2] = inArray[x, y] + _baseCostMap[c.Item1, c.Item2];
+            if(inArray[c.Item1, c.Item2] == _n)
+            {
+                inArray[c.Item1, c.Item2] = inArray[x, y] + _baseCostMap[c.Item1, c.Item2];
+            }
         }
     }
 
@@ -100,6 +96,20 @@ public class NavigationManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (once)
+        {
+            _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            Debug.Log(_gameManager);
+            Debug.Log(_gameManager._tileMap);
+            _baseCostMap = new int[_gameManager._tileMap.GetLength(0), _gameManager._tileMap.GetLength(1)];
+            for (int x = 0; x < _gameManager._tileMap.GetLength(0); x++)
+            {
+                for (int y = 0; y < _gameManager._tileMap.GetLength(1); y++)
+                {
+                    _baseCostMap[x, y] = _gameManager._tileMap[x, y]._pathfindingCost;
+                }
+            }
+        }
+        once = false;
     }
 }
