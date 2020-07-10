@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -128,7 +129,7 @@ public class GameManager : MonoBehaviour
 
     #region MonoBehaviour
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         HandleKeyboardInput();
         UpdateInspectorNumbersForResources();
@@ -138,6 +139,17 @@ public class GameManager : MonoBehaviour
         {
             EconomyCycle();
             timer = timer - economyWaitTime;
+        }
+        GameObject.Find("moneytext").GetComponent<Text>().text = money.ToString();
+        JobManager jobs = GameObject.Find("GameManager").GetComponent<JobManager>();
+        GameObject.Find("residentstext").GetComponent<Text>().text = (jobs._occupiedWorkers.Count + jobs._unoccupiedWorkers.Count).ToString();
+        // we changed the values, because the mentioned ones seem unobtainable on our small map
+        if (money > 5000 || (jobs._occupiedWorkers.Count + jobs._unoccupiedWorkers.Count) > 50)
+        {
+            Time.timeScale = 0;
+            GameObject.Find("Canvas").SetActive(false);
+            GameObject.Find("WonCanvas").GetComponent<Canvas>().enabled = true;
+
         }
     }
     #endregion
@@ -154,6 +166,11 @@ public class GameManager : MonoBehaviour
         _resourcesInWarehouse.Add(ResourceTypes.Clothes, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Potato, 0);
         _resourcesInWarehouse.Add(ResourceTypes.Schnapps, 0);
+    }
+
+    public void ChangeSelectedBuilding(int i)
+    {
+        _selectedBuildingPrefabIndex = i-1;
     }
 
     //Sets the index for the currently selected building prefab by checking key presses on the numbers 1 to 0
@@ -211,6 +228,13 @@ public class GameManager : MonoBehaviour
         _ResourcesInWarehouse_Clothes = _resourcesInWarehouse[ResourceTypes.Clothes];
         _ResourcesInWarehouse_Potato = _resourcesInWarehouse[ResourceTypes.Potato];
         _ResourcesInWarehouse_Schnapps = _resourcesInWarehouse[ResourceTypes.Schnapps];
+        GameObject.Find("invtxtfish").GetComponent<Text>().text = _ResourcesInWarehouse_Fish.ToString();
+        GameObject.Find("invtxtwood").GetComponent<Text>().text = _ResourcesInWarehouse_Wood.ToString();
+        GameObject.Find("invtxtsheep").GetComponent<Text>().text = _ResourcesInWarehouse_Wool.ToString();
+        GameObject.Find("invtxtcloth").GetComponent<Text>().text = _ResourcesInWarehouse_Clothes.ToString();
+        GameObject.Find("invtxtpotato").GetComponent<Text>().text = _ResourcesInWarehouse_Potato.ToString();
+        GameObject.Find("invtxtschnapps").GetComponent<Text>().text = _ResourcesInWarehouse_Schnapps.ToString();
+        GameObject.Find("invtxtplanks").GetComponent<Text>().text = _ResourcesInWarehouse_Planks.ToString();
     }
 
     //Checks if there is at least one material for the queried resource type in the warehouse

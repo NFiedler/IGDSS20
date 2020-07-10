@@ -5,6 +5,7 @@ using System.Linq;
 using System.Numerics;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 
 public class MouseManager : MonoBehaviour
@@ -124,6 +125,10 @@ public class MouseManager : MonoBehaviour
             // generate ray from mouse position
             Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return;
+            }
             // check if object was hit
             if (Physics.Raycast(mouseRay, out hit, maxHeight + 200, 1000))
             {
