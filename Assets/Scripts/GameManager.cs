@@ -292,37 +292,67 @@ public class GameManager : MonoBehaviour
         int xSize = _tileMap.GetLength(0);
         int ySize = _tileMap.GetLength(1);
 
+        // if height even :  width - 1
+        // if height odd : width + 1
+        bool even = (y % 2) == 0;
+
         if (y - 1 >= 0)
         {
             result.Add(_tileMap[x, y - 1]);
+            if (even)
+            {
+                t.SetEdge(Tile.Edges.Bottomright, _tileMap[x, y - 1]._type != t._type);
+            }
+            else
+            {
+                t.SetEdge(Tile.Edges.Bottomleft, _tileMap[x, y - 1]._type != t._type);
+            }
+
         }
-        if(y + 1 < ySize)
+        if (y + 1 < ySize)
         {
             result.Add(_tileMap[x, y + 1]);
+            if (even)
+            {
+                t.SetEdge(Tile.Edges.Topright, _tileMap[x, y + 1]._type != t._type);
+            }
+            else
+            {
+                t.SetEdge(Tile.Edges.Topleft, _tileMap[x, y + 1]._type != t._type);
+            }
+
+            //t.SetEdge(Tile.Edges., _tileMap[x, y + 1]._type != t._type);
+
         }
 
         if (y - 2 >= 0)
         {
             result.Add(_tileMap[x, y - 2]);
+            t.SetEdge(Tile.Edges.Bottom, _tileMap[x, y - 2]._type != t._type); // works
+
         }
         if (y + 2 < ySize)
         {
             result.Add(_tileMap[x, y + 2]);
+            t.SetEdge(Tile.Edges.Top, _tileMap[x, y + 2]._type != t._type);
+
         }
 
-        // if height even :  width - 1
-        // if height odd : width + 1
-        bool even = (y % 2) == 0;
+
 
         if(even && (x - 1 >= 0))
         {
             if (y - 1 >= 0)
             {
                 result.Add(_tileMap[x - 1, y - 1]);
+                t.SetEdge(Tile.Edges.Bottomleft, _tileMap[x - 1, y - 1]._type != t._type); // works for half
+
             }
             if (y + 1 < ySize)
             {
                 result.Add(_tileMap[x - 1, y + 1]);
+                t.SetEdge(Tile.Edges.Topleft, _tileMap[x - 1, y + 1]._type != t._type); // works for half 
+
             }
         }
 
@@ -331,10 +361,12 @@ public class GameManager : MonoBehaviour
                 if (y - 1 >= 0)
                 {
                     result.Add(_tileMap[x + 1, y - 1]);
-                }
-                if (y + 1 < ySize)
+                    t.SetEdge(Tile.Edges.Bottomright, _tileMap[x + 1, y - 1]._type != t._type); // works for half the cases
+            }
+            if (y + 1 < ySize)
                 {
                     result.Add(_tileMap[x + 1, y + 1]);
+                    t.SetEdge(Tile.Edges.Topright, _tileMap[x + 1, y + 1]._type != t._type); // works for half the cases
             }
 
 

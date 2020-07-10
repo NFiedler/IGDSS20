@@ -23,6 +23,39 @@ public class Tile : MonoBehaviour
         }
         return count;
     }
+    
+    public enum Edges {Top, Topright, Bottomright, Bottom, Bottomleft, Topleft};
+
+    public void SetEdge(Edges edge, bool set)
+    {
+        string edgename;
+        switch(edge){
+            case Edges.Top: 
+                edgename = "TopEdge";
+                break;
+            case Edges.Topright:
+                edgename = "TopRightEdge";
+                break;
+            case Edges.Bottomright:
+                edgename = "BottomRightEdge";
+                break;
+            case Edges.Bottom:
+                edgename = "BottomEdge";
+                break;
+            case Edges.Bottomleft:
+                edgename = "BottomLeftEdge";
+                break;
+            case Edges.Topleft:
+                edgename = "TopLeftEdge";
+                break;
+            default:
+                Debug.LogError("This should have never ever happened.");
+                edgename = "";
+                break;
+        }
+        GameObject currentEdge = _tileObject.transform.Find(edgename).gameObject;
+        currentEdge.SetActive(set);
+    }
 
     #region Attributes
     public GameObject _tileObject;
